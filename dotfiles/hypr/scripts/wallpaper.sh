@@ -3,7 +3,7 @@
 # Re-points ~/.config/hypr/wallpaper (used by hyprpaper and hyprlock).
 set -euo pipefail
 link="$HOME/.config/hypr/wallpaper"
-dirs=(/usr/share/backgrounds/tushar-os "$HOME/Pictures/Wallpapers")
+dirs=(/usr/share/backgrounds/hyprdev "$HOME/Pictures/Wallpapers")
 
 choice=$(
   for d in "${dirs[@]}"; do

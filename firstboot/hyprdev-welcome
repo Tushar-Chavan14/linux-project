@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# tushar-os first-boot setup. Safe to re-run: every step is idempotent.
+# hyprdev first-boot setup. Safe to re-run: every step is idempotent.
 set -uo pipefail
-LIB=${TOS_LIB:-/usr/share/tushar-os/welcome}
+LIB=${TOS_LIB:-/usr/share/hyprdev/welcome}
 # shellcheck source=lib.sh
 source "$LIB/lib.sh"
 for m in "$LIB"/modules/*.sh; do
@@ -29,8 +29,8 @@ if [[ ${1:-} == --all ]]; then
   picked=$(printf '%s\n' "${ORDER[@]}")
 else
   gum style --border rounded --border-foreground 183 --padding "1 3" --margin 1 \
-    "$(gum style --foreground 183 --bold 'Welcome to tushar-os')" \
-    "Pick what to set up. Space toggles, Enter confirms." "Re-run any time: tushar-os-welcome"
+    "$(gum style --foreground 183 --bold 'Welcome to hyprdev')" \
+    "Pick what to set up. Space toggles, Enter confirms." "Re-run any time: hyprdev-welcome"
   defaults=$(IFS=,; echo "${ORDER[*]:0:3},${ORDER[4]},${ORDER[5]}")
   picked=$(gum choose --no-limit --height 14 --selected="$defaults" "${ORDER[@]}") || exit 0
 fi

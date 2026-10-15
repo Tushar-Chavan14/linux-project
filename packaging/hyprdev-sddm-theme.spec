@@ -1,26 +1,26 @@
-Name:           tushar-os-sddm-theme
+Name:           hyprdev-sddm-theme
 Version:        0.1.0
 Release:        2%{?dist}
-Summary:        tushar-os SDDM login theme
+Summary:        hyprdev SDDM login theme
 License:        MIT
 URL:            https://github.com/Tushar-Chavan14/linux-project
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 Requires:       sddm qt6-qtdeclarative qt6-qt5compat
-Requires:       tushar-os-branding orbitron-fonts rsms-inter-fonts symbols-nerd-fonts
+Requires:       hyprdev-branding orbitron-fonts rsms-inter-fonts symbols-nerd-fonts
 
 %description
-Catppuccin Mocha glass login screen for SDDM, matching the tushar-os desktop.
+Catppuccin Mocha glass login screen for SDDM, matching the hyprdev desktop.
 
 %prep
 %setup -q
 
 %install
-install -d %{buildroot}%{_datadir}/sddm/themes/tushar-os
-cp -a sddm-theme/. %{buildroot}%{_datadir}/sddm/themes/tushar-os/
-install -Dm644 /dev/stdin %{buildroot}%{_sysconfdir}/sddm.conf.d/10-tushar-os.conf <<'CONF'
+install -d %{buildroot}%{_datadir}/sddm/themes/hyprdev
+cp -a sddm-theme/. %{buildroot}%{_datadir}/sddm/themes/hyprdev/
+install -Dm644 /dev/stdin %{buildroot}%{_sysconfdir}/sddm.conf.d/10-hyprdev.conf <<'CONF'
 [Theme]
-Current=tushar-os
+Current=hyprdev
 CursorTheme=catppuccin-mocha-mauve-cursors
 
 [General]
@@ -30,8 +30,8 @@ install -Dm644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 
 %files
 %license %{_licensedir}/%{name}/LICENSE
-%{_datadir}/sddm/themes/tushar-os/
-%config(noreplace) %{_sysconfdir}/sddm.conf.d/10-tushar-os.conf
+%{_datadir}/sddm/themes/hyprdev/
+%config(noreplace) %{_sysconfdir}/sddm.conf.d/10-hyprdev.conf
 
 %changelog
 * Thu Oct 15 2026 Tushar Chavan <deepak@silverferndigital.com> - 0.1.0-2

@@ -1,10 +1,10 @@
-# Publishing and updating tushar-os
+# Publishing and updating hyprdev
 
 There are two release channels, and they update independently:
 
 | Channel | What it carries | How users get it |
 |---|---|---|
-| **COPR repo** `tushar/tushar-os` | RPMs for dotfiles, themes, the welcome app, branding and missing packages | `sudo dnf upgrade` on installed systems |
+| **COPR repo** `tushar1402/hyprdev` | RPMs for dotfiles, themes, the welcome app, branding and missing packages | `sudo dnf upgrade` on installed systems |
 | **GitHub Releases** | The live/installer ISO | Download for new installs |
 
 Most changes (dotfiles, scripts, themes) only need a COPR build. Rebuild the ISO for new
@@ -19,8 +19,8 @@ Fedora releases, or every so often so new installs start fresh.
 ```bash
 cd ~/projects/my-linux
 git add -A
-git commit -m "tushar-os: initial import"
-gh repo create tushar-os --public --source=. --push
+git commit -m "hyprdev: initial import"
+gh repo create linux-project --public --source=. --push
 ```
 
 `.gitignore` already leaves out `out/`, `*.iso` and `.cache/`, so build output never gets committed.
@@ -29,25 +29,25 @@ After the first push, update the `URL:` field in `packaging/*.spec` to your real
 ### 1.2 Create the COPR project (for `dnf upgrade` updates)
 
 1. Log in at <https://copr.fedorainfracloud.org> with a Fedora account. Create one at <https://accounts.fedoraproject.org> if needed.
-2. **New Project** → name `tushar-os`. Chroots: `fedora-44-x86_64`, and later `fedora-45-x86_64` too.
+2. **New Project** → name `hyprdev` (COPR names can't be renamed later). Chroots: `fedora-44-x86_64`, and later `fedora-45-x86_64` too.
    - Under **External repositories**, add the COPRs we depend on, so builds can resolve them:
      `copr://sdegler/hyprland`, `copr://atim/starship`, `copr://atim/lazygit`,
      `copr://lihaohong/yazi`, `copr://erikreider/swayosd`
    - Tick **Enable internet access during builds**. nwg-dock-hyprland needs it to fetch Go modules.
 3. Add one **package** per spec. For each, choose *SCM*:
-   - Clone URL: `https://github.com/<you>/tushar-os.git`
-   - Spec file: e.g. `packaging/tushar-os-desktop.spec` (also `packaging/extra/nwg-dock-hyprland.spec`, and so on)
+   - Clone URL: `https://github.com/Tushar-Chavan14/linux-project.git`
+   - Spec file: e.g. `packaging/hyprdev-desktop.spec` (also `packaging/extra/nwg-dock-hyprland.spec`, and so on)
    - SRPM build method: **make_srpm** (uses `.copr/Makefile`)
    - Turn on **Auto-rebuild**
 4. In COPR, open **Settings → Integrations** and copy the GitHub webhook URL.
    Add it on GitHub under **Settings → Webhooks** (content type `application/json`, push events).
    From then on, every push to `main` rebuilds the packages.
-5. Set `COPR_OWNER` in `config.env` to your COPR username. Then add `"<you>/tushar-os"` to
+5. Set `COPR_OWNER` in `config.env` to your COPR username. Then add `"<you>/hyprdev"` to
    `COPRS=(…)` so ISOs ship with your repo enabled and installed systems pick up updates.
 
 Build order the first time: `orbitron-fonts`, `symbols-nerd-fonts`, `catppuccin-cursors` and
-`nwg-dock-hyprland` first, then `tushar-os-release` and `tushar-os-branding`, then
-`tushar-os-welcome` and `tushar-os-sddm-theme`, and `tushar-os-desktop` last.
+`nwg-dock-hyprland` first, then `hyprdev-release` and `hyprdev-branding`, then
+`hyprdev-welcome` and `hyprdev-sddm-theme`, and `hyprdev-desktop` last.
 
 ### 1.3 GitHub Actions
 
@@ -64,32 +64,32 @@ Nothing needs configuring:
 
 ```bash
 # 1. Edit dotfiles/, firstboot/, branding/, sddm-theme/ …
-# 2. Bump the version of each package you changed, e.g. packaging/tushar-os-desktop.spec:
+# 2. Bump the version of each package you changed, e.g. packaging/hyprdev-desktop.spec:
 #      Version: 0.1.1
 #    and add a %changelog entry (rpmdev-bumpspec does both).
 # 3. Check locally
-packaging/build-rpms.sh tushar-os-desktop
+packaging/build-rpms.sh hyprdev-desktop
 # 4. Push
 git commit -am "waybar: show CPU temperature"
 git push
 ```
 
-CI checks the change, COPR rebuilds the package, and every installed tushar-os
+CI checks the change, COPR rebuilds the package, and every installed hyprdev
 system gets it on its next `sudo dnf upgrade`.
 
 ### How users get dotfile updates
 
-RPM updates refresh the copies in `/usr/share/tushar-os/skel` and `/etc/skel`, never the files
+RPM updates refresh the copies in `/usr/share/hyprdev/skel` and `/etc/skel`, never the files
 already in a user's home. That's deliberate, so nobody's customisations get overwritten.
 Users pull in new defaults with:
 
 ```bash
-tushar-os-reset-config   # copies new defaults, backs up changed files to ~/.config/tushar-os/backup-*/
+hyprdev-reset-config   # copies new defaults, backs up changed files to ~/.config/hyprdev/backup-*/
 hyprctl reload
 ```
 
 Personal tweaks that should survive resets go in `~/.config/hypr/user.conf` and
-`~/.config/tushar-os/location`.
+`~/.config/hyprdev/location`.
 
 ---
 
@@ -97,7 +97,7 @@ Personal tweaks that should survive resets go in `~/.config/hypr/user.conf` and
 
 ```bash
 # Optional: build and test locally first
-build/build-iso.sh                       # -> out/iso/TusharOS-TusharOS-Live-*.iso
+build/build-iso.sh                       # -> out/iso/HyprDev-HyprDev-Live-*.iso
 tests/boot-iso.sh out/iso/*.iso 300 30   # boots it under KVM, screenshots in out/boot/
 
 git tag v0.2.0
@@ -106,15 +106,15 @@ git push origin v0.2.0                   # release.yml builds and publishes the 
 
 GitHub limits each release file to **2 GiB**. The workflow publishes a `.sha256` and, if the ISO is
 larger, splits it into `.part0`, `.part1`, … The release notes explain how to join the parts
-(`cat *.part* > tushar-os.iso`).
+(`cat *.part* > hyprdev.iso`).
 
 To publish an ISO you built locally instead:
 
 ```bash
 cd out/iso
 sha256sum *.iso > SHA256SUMS
-split -b 1900M -d -a 1 TusharOS-*.iso TusharOS.iso.part   # only if > 2 GiB
-gh release create v0.2.0 TusharOS.iso.part* SHA256SUMS --title "tushar-os v0.2.0" \
+split -b 1900M -d -a 1 HyprDev-*.iso HyprDev.iso.part   # only if > 2 GiB
+gh release create v0.2.0 HyprDev.iso.part* SHA256SUMS --title "hyprdev v0.2.0" \
   --notes-file ../../docs/RELEASE_NOTES_TEMPLATE.md
 ```
 
@@ -143,8 +143,8 @@ large files, and link it from the release notes.
 
 | Thing | Scheme | Example |
 |---|---|---|
-| Our packages | `Version:` per spec, bumped when that package changes | `tushar-os-desktop 0.3.2` |
-| `tushar-os-release` | Follows the Fedora version | `44-1` |
+| Our packages | `Version:` per spec, bumped when that package changes | `hyprdev-desktop 0.3.2` |
+| `hyprdev-release` | Follows the Fedora version | `44-1` |
 | ISO / git tag | `v<major>.<minor>.<patch>` | `v0.2.0` |
 | Upstream repackages (`packaging/extra`) | Upstream's version | `nwg-dock-hyprland 0.4.11` |
 
@@ -155,7 +155,7 @@ large files, and link it from the release notes.
 Every build step runs in Docker. These are the images the project creates:
 
 ```text
-tushar-os-lint  tushar-os-rpmbuild  tushar-os-kiwi  tushar-os-qemu
+hyprdev-lint  hyprdev-rpmbuild  hyprdev-kiwi  hyprdev-qemu
 registry.fedoraproject.org/fedora:44  fedora:44
 ```
 
@@ -170,6 +170,6 @@ Caches under `.cache/` (all safe to delete, but they make rebuilds faster):
 To remove the images and the build caches:
 
 ```bash
-docker rmi tushar-os-lint tushar-os-rpmbuild tushar-os-kiwi tushar-os-qemu registry.fedoraproject.org/fedora:44 fedora:44
+docker rmi hyprdev-lint hyprdev-rpmbuild hyprdev-kiwi hyprdev-qemu registry.fedoraproject.org/fedora:44 fedora:44
 rm -rf .cache/kiwi-desc .cache/go-build    # keep kiwi-boxes and pkg-cache to keep rebuilds fast
 ```

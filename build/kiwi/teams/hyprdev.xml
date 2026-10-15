@@ -1,26 +1,26 @@
 <image>
 	<profiles>
-		<profile name="TusharOS-Desktop" description="tushar-os Hyprland desktop">
+		<profile name="HyprDev-Desktop" description="hyprdev Hyprland desktop">
 			<requires profile="DesktopCommon"/>
 		</profile>
-		<profile name="TusharOS-Live" description="tushar-os Live ISO">
-			<requires profile="TusharOS-Desktop"/>
+		<profile name="HyprDev-Live" description="hyprdev Live ISO">
+			<requires profile="HyprDev-Desktop"/>
 			<requires profile="LiveInstall"/>
 		</profile>
 	</profiles>
-	<packages type="bootstrap" patternType="plusRecommended" profiles="TusharOS-Live">
+	<packages type="bootstrap" patternType="plusRecommended" profiles="HyprDev-Live">
 		<!-- Fedora Remix rules: no fedora-release / fedora-logos -->
-		<package name="tushar-os-release"/>
+		<package name="hyprdev-release"/>
 		<package name="generic-logos"/>
 	</packages>
-	<packages type="image" patternType="plusRecommended" profiles="TusharOS-Desktop">
+	<packages type="image" patternType="plusRecommended" profiles="HyprDev-Desktop">
 		<!-- Base OS (Fedora spins get this via their *-desktop-environment group) -->
 		<namedCollection name="core"/>
 		<package name="selinux-policy-targeted"/>
 		<package name="policycoreutils"/>
 		<!-- Desktop: pulls the whole Hyprland stack, themes, fonts, welcome app -->
-		<package name="tushar-os-desktop"/>
-		<package name="tushar-os-sddm-theme"/>
+		<package name="hyprdev-desktop"/>
+		<package name="hyprdev-sddm-theme"/>
 		<package name="sddm"/>
 		<package name="sddm-wayland-generic"/>
 		<package name="firefox"/>
@@ -45,7 +45,7 @@
 		<ignore name="generic-release-common"/>
 		<ignore name="gnome-shell"/>
 	</packages>
-	<packages type="image" patternType="plusRecommended" profiles="TusharOS-Live">
-		<package name="tushar-os-live"/>
+	<packages type="image" patternType="plusRecommended" profiles="HyprDev-Live">
+		<package name="hyprdev-live"/>
 	</packages>
 </image>

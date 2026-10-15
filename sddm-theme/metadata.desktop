@@ -1,6 +1,6 @@
 [SddmGreeterTheme]
-Name=tushar-os
-Description=Catppuccin Mocha glass login, matching the tushar-os desktop
+Name=hyprdev
+Description=Catppuccin Mocha glass login, matching the hyprdev desktop
 Author=Tushar Chavan
 License=MIT
 Type=sddm-theme

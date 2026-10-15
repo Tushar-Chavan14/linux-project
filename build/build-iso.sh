@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Build the tushar-os live ISO with KIWI inside a privileged Fedora container.
-# Output: out/iso/TusharOS-TusharOS-Live-*.iso
+# Build the hyprdev live ISO with KIWI inside a privileged Fedora container.
+# Output: out/iso/HyprDev-HyprDev-Live-*.iso
 #   build/build-iso.sh            # full build (rebuilds our RPMs first)
 #   SKIP_RPMS=1 build/build-iso.sh  # reuse out/rpms
 #   FAST=1 build/build-iso.sh       # test build: lz4 instead of lzma (bigger ISO, ~6 min faster)
@@ -33,7 +33,7 @@ echo "fedora-kiwi-descriptions @ $(git -C "$cache/fkd" rev-parse --short HEAD)"
 # -L: the boxbuild VM reads this tree over 9p, which does not follow symlinks
 rm -rf "$desc"; cp -rL "$cache/fkd" "$desc"; rm -rf "$desc/.git"
 cp -a "$root/build/kiwi/." "$desc/"
-sed -i "s/@FEDORA_VERSION@/$FEDORA_VERSION/g" "$desc/TusharOS.kiwi"
+sed -i "s/@FEDORA_VERSION@/$FEDORA_VERSION/g" "$desc/HyprDev.kiwi"
 copr_xml=""
 for c in "${COPRS[@]}"; do
   owner=${c%%/*} proj=${c##*/}
@@ -48,18 +48,18 @@ done
 # Local package cache (build/cache-packages.sh): preferred over the network,
 # remote repos still fill in anything new.
 if [[ ${CACHE:-1} == 1 && -d $cache/pkg-cache/repodata ]]; then
-  copr_xml+="	<repository type=\"rpm-md\" alias=\"tushar-os-cache\" priority=\"2\" imageinclude=\"false\">
+  copr_xml+="	<repository type=\"rpm-md\" alias=\"hyprdev-cache\" priority=\"2\" imageinclude=\"false\">
 		<source path=\"this://./pkg-cache\"/>
 	</repository>
 "
   echo "Package cache: $(find "$cache/pkg-cache" -name '*.rpm' | wc -l) RPMs"
 fi
-python3 - "$desc/repositories/tushar-os.xml.in" "$desc/repositories/tushar-os.xml" "$copr_xml" <<'PY'
+python3 - "$desc/repositories/hyprdev.xml.in" "$desc/repositories/hyprdev.xml" "$copr_xml" <<'PY'
 import sys
 src, dst, copr = sys.argv[1:]
 open(dst, "w").write(open(src).read().replace("@COPR_REPOS@", copr.rstrip()))
 PY
-rm "$desc/repositories/tushar-os.xml.in"
+rm "$desc/repositories/hyprdev.xml.in"
 if [[ -n ${FEDORA_MIRROR:-} ]]; then
   python3 - "$desc/repositories/core.xml" "$FEDORA_MIRROR" <<'PY'
 import re, sys
@@ -84,7 +84,7 @@ if [[ ${FAST:-0} == 1 ]]; then
   echo "FAST=1: lz4hc compression (test build, larger ISO)"
 fi  # boxbuild VM has no tagmedia; ISO ships a .sha256 instead
 # Fedora's config.sh ends with "exit 0": insert our section before it, not after.
-python3 - "$desc/config.sh" "$root/build/config-tushar-os.sh" <<'PY'
+python3 - "$desc/config.sh" "$root/build/config-hyprdev.sh" <<'PY'
 import sys
 cfg, ours = sys.argv[1:]
 lines = open(cfg).read().rstrip("\n").split("\n")
@@ -104,7 +104,7 @@ cp "$root"/out/rpms/*.noarch.rpm "$root"/out/rpms/*.x86_64.rpm "$desc/local-repo
 # 5. Build — isolated: KIWI runs inside its own KVM VM (kiwi boxbuild), so the
 #    container needs only /dev/kvm. No --privileged, no host /dev: image
 #    scriptlets such as os-prober never see the host's disks.
-docker build -q -t tushar-os-kiwi --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
+docker build -q -t hyprdev-kiwi --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
   -f "$root/build/Containerfile.kiwi" "$root/build" >/dev/null
 mkdir -p "$cache/kiwi-boxes"
 # RAM is backed by /dev/shm inside the container, so it must fit the box VM.
@@ -114,11 +114,11 @@ for attempt in 1 2 3; do
   echo "=== KIWI build attempt $attempt"
   rc=0
   docker run --rm --device /dev/kvm --shm-size=11g --dns 1.1.1.1 --dns 8.8.8.8 \
-    -v "$root:/work" -v "$cache/kiwi-boxes:/root/.kiwi_boxes" -w /work/.cache/kiwi-desc tushar-os-kiwi bash -euo pipefail -c '
+    -v "$root:/work" -v "$cache/kiwi-boxes:/root/.kiwi_boxes" -w /work/.cache/kiwi-desc hyprdev-kiwi bash -euo pipefail -c '
       trap "chown -R '"$(id -u):$(id -g)"' /work/out /work/.cache" EXIT
       createrepo_c -q local-repo
       rm -rf /work/out/kiwi-build
-      ./kiwi-build --isolated --kiwi-file=TusharOS.kiwi --image-type=iso --image-profile=TusharOS-Live \
+      ./kiwi-build --isolated --kiwi-file=HyprDev.kiwi --image-type=iso --image-profile=HyprDev-Live \
         --output-dir=/work/out/kiwi
       find /work/out/kiwi-build -maxdepth 1 -name "*.iso" -exec mv {} /work/out/iso/ \;
       # Embed the checksum the default "Test this media & start" entry verifies

@@ -1,12 +1,12 @@
 # shellcheck shell=bash disable=SC2154  # fragment appended to Fedora config.sh; kiwi_profiles comes from /.profile
 #======================================
-# tushar-os customisations (appended to Fedora's config.sh by build-iso.sh)
+# hyprdev customisations (appended to Fedora's config.sh by build-iso.sh)
 #--------------------------------------
-if [[ "$kiwi_profiles" == *"TusharOS"* ]]; then
+if [[ "$kiwi_profiles" == *"HyprDev"* ]]; then
 	echo 'livesys_session="hyprland"' > /etc/sysconfig/livesys
 	systemctl set-default graphical.target
 	systemctl enable sddm.service
-	# Hostname / pretty name come from tushar-os-release
+	# Hostname / pretty name come from hyprdev-release
 	# Plymouth: neutral spinner (Fedora's charge theme is Fedora-branded)
 	plymouth-set-default-theme spinner || true
 	# Flathub for the welcome app (system-wide remote, no apps preinstalled)

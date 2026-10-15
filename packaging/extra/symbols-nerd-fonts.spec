@@ -29,4 +29,4 @@ install -Dm644 10-nerd-font-symbols.conf %{buildroot}%{_fontconfig_templatedir}/
 
 %changelog
 * Thu Oct 15 2026 Tushar Chavan <tusharchavan166@gmail.com> - 3.5.1-1
-- Initial package for tushar-os
+- Initial package for hyprdev

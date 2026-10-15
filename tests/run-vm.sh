@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run tushar-os in a persistent KVM VM you can see and use.
+# Run hyprdev in a persistent KVM VM you can see and use.
 #   tests/run-vm.sh out/iso/<file>.iso   # first time: boot the ISO, install to the VM disk
 #   tests/run-vm.sh                      # afterwards: boot the installed system
 # Display: VNC on localhost:5901 (local only). Viewer, once: sudo apt install tigervnc-viewer
@@ -17,12 +17,12 @@ if [[ -n ${1:-} ]]; then
   iso_args=(-v "$iso:/boot.iso:ro")
 fi
 
-docker build -q -t tushar-os-qemu --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
+docker build -q -t hyprdev-qemu --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
   -f "$root/tests/Containerfile.qemu" "$root/tests" >/dev/null
 echo "VM starting - connect a VNC viewer to localhost:5901 (Ctrl+C here to power off)"
 # Host networking: the VM's 10.0.2.2 then reaches services on this machine.
 docker run --rm -it --device /dev/kvm --network host \
-  -v "$vm:/vm" "${iso_args[@]}" tushar-os-qemu bash -euo pipefail -c '
+  -v "$vm:/vm" "${iso_args[@]}" hyprdev-qemu bash -euo pipefail -c '
   [[ -f /vm/disk.qcow2 ]] || qemu-img create -q -f qcow2 /vm/disk.qcow2 40G
   [[ -f /vm/vars.fd ]] || cp /usr/share/edk2/ovmf/OVMF_VARS.fd /vm/vars.fd
   cdrom=(); [[ -f /boot.iso ]] && cdrom=(-cdrom /boot.iso -boot order=dc)

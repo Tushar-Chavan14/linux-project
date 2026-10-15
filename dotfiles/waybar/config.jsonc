@@ -1,4 +1,4 @@
-// tushar-os top bar — portfolio layout: workspaces | clock | status
+// hyprdev top bar — portfolio layout: workspaces | clock | status
 {
   "layer": "top",
   "position": "top",

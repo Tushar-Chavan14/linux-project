@@ -10,10 +10,10 @@ source "$root/config.env"
 iso=$(realpath "${1:?usage: boot-iso.sh <iso> [seconds] [interval]}")
 secs=${2:-240} every=${3:-20}
 out="$root/out/boot"; mkdir -p "$out"; rm -f "$out"/shot-*.png
-docker build -q -t tushar-os-qemu --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
+docker build -q -t hyprdev-qemu --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
   -f "$root/tests/Containerfile.qemu" "$root/tests" >/dev/null
 docker run --rm --device /dev/kvm -v "$iso:/boot.iso:ro" -v "$out:/out" \
-  -e SECS="$secs" -e EVERY="$every" tushar-os-qemu bash -euo pipefail -c '
+  -e SECS="$secs" -e EVERY="$every" hyprdev-qemu bash -euo pipefail -c '
   cp /usr/share/edk2/ovmf/OVMF_VARS.fd /tmp/vars.fd
   qemu-system-x86_64 -enable-kvm -machine q35 -cpu host -smp 4 -m 6144 \
     -drive if=pflash,format=raw,readonly=on,file=/usr/share/edk2/ovmf/OVMF_CODE.fd \

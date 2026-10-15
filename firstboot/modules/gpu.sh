@@ -25,13 +25,13 @@ export __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_N
 exec "$@"
 PRIME
     cat > "$conf" <<'CONF'
-# Hybrid: Hyprland renders on the integrated GPU (written by tushar-os-welcome)
+# Hybrid: Hyprland renders on the integrated GPU (written by hyprdev-welcome)
 # Use `prime-run <app>` to offload apps to NVIDIA.
 CONF
   else
     step "NVIDIA-only system: configuring Hyprland for the NVIDIA GPU."
     cat > "$conf" <<'CONF'
-# NVIDIA-only (written by tushar-os-welcome)
+# NVIDIA-only (written by hyprdev-welcome)
 env = LIBVA_DRIVER_NAME,nvidia
 env = __GLX_VENDOR_LIBRARY_NAME,nvidia
 env = NVD_BACKEND,direct

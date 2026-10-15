@@ -1,4 +1,4 @@
-# tushar-os fish config. Personal additions: ~/.config/fish/conf.d/*.fish
+# hyprdev fish config. Personal additions: ~/.config/fish/conf.d/*.fish
 set -g fish_greeting
 if status is-interactive
     command -q starship; and starship init fish | source

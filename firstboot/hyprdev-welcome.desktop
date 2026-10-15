@@ -1,8 +1,8 @@
 [Desktop Entry]
-Name=tushar-os Setup
+Name=hyprdev Setup
 Comment=Install apps, drivers and developer tools
-Exec=kitty --title tushar-os-welcome tushar-os-welcome
-Icon=tushar-os-logo
+Exec=kitty --title hyprdev-welcome hyprdev-welcome
+Icon=hyprdev-logo
 Terminal=false
 Type=Application
 Categories=System;Settings;

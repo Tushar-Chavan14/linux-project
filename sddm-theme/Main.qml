@@ -1,4 +1,4 @@
-// tushar-os SDDM greeter: blurred wallpaper, big clock, glass login card.
+// hyprdev SDDM greeter: blurred wallpaper, big clock, glass login card.
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -72,7 +72,7 @@ Rectangle {
 
             Image {
                 Layout.alignment: Qt.AlignHCenter
-                source: "file:///usr/share/icons/hicolor/scalable/apps/tushar-os-logo.svg"
+                source: "file:///usr/share/icons/hicolor/scalable/apps/hyprdev-logo.svg"
                 sourceSize.width: 56; sourceSize.height: 56
             }
             ComboBox {
