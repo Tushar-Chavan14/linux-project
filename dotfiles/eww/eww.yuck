@@ -1,0 +1,65 @@
+;; tushar-os desktop widgets — Wayland port of ~/.config/conky/calendarVertical
+
+(defpoll calendar :interval "60s" :initial "[]" "scripts/calendar.sh")
+(defpoll hour   :interval "5s" "date +%I")
+(defpoll minute :interval "5s" "date +%M")
+(defpoll ampm   :interval "60s" "date +%p")
+(defpoll sysinfo :interval "3s" :initial "{}" "scripts/sysinfo.sh")
+(defpoll weather :interval "900s" :initial "{}" "scripts/weather.sh")
+
+;; ---- vertical calendar strip ----
+(defwidget calendar-strip []
+  (box :class "card calendar" :orientation "v" :space-evenly false
+    (for d in calendar
+      (box :space-evenly false :halign "start"
+           :class {d.today ? "day today" : "day"}
+        (label :class "num" :style "color: ${d.color};" :text {d.day})
+        (label :class "meta" :visible {d.today} :text "${d.month} ${d.weekday}")))))
+
+(defwindow calendar
+  :monitor 0
+  :geometry (geometry :x "16px" :y "70px" :width "150px" :anchor "top left")
+  :stacking "bottom"
+  :exclusive false
+  :focusable "none"
+  (calendar-strip))
+
+;; ---- big clock ----
+(defwidget clock []
+  (box :class "clock" :space-evenly false :halign "end"
+    (label :class "h" :text hour)
+    (label :class "sep" :text ":")
+    (label :class "m" :text minute)
+    (label :class "ampm" :text ampm)))
+
+(defwindow clock
+  :monitor 0
+  :geometry (geometry :x "60px" :y "60px" :anchor "top right")
+  :stacking "bottom"
+  :exclusive false
+  :focusable "none"
+  (clock))
+
+;; ---- system info ----
+(defwidget row [label value color]
+  (box :class "row" :space-evenly false
+    (label :class "k" :style "color: ${color};" :text label)
+    (label :class "v" :text value :limit-width 28)))
+
+(defwidget info []
+  (box :class "card info" :orientation "v" :space-evenly false
+    (row :label "User"     :color "#89b4fa" :value {sysinfo.user ?: "-"})
+    (row :label "CPU"      :color "#94e2d5" :value "${round(EWW_CPU.avg, 0)}%")
+    (row :label "RAM"      :color "#cba6f7" :value "${round(EWW_RAM.used_mem / 1073741824, 1)} / ${round(EWW_RAM.total_mem / 1073741824, 1)} GiB")
+    (row :label "Disk"     :color "#eba0ac" :value "${round(EWW_DISK['/'].used / 1073741824, 0)} / ${round(EWW_DISK['/'].total / 1073741824, 0)} GiB")
+    (row :label "Battery"  :color "#b4befe" :value {sysinfo.battery ?: "AC"})
+    (row :label "Location" :color "#89dceb" :value {weather.place ?: "-"})
+    (row :label "Weather"  :color "#94e2d5" :value {weather.summary ?: "offline"})))
+
+(defwindow info
+  :monitor 0
+  :geometry (geometry :x "60px" :y "220px" :width "300px" :anchor "top right")
+  :stacking "bottom"
+  :exclusive false
+  :focusable "none"
+  (info))

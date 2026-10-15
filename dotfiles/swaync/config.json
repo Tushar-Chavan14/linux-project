@@ -1,0 +1,36 @@
+{
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "layer": "overlay",
+  "control-center-margin-top": 10,
+  "control-center-margin-right": 10,
+  "control-center-width": 400,
+  "notification-window-width": 380,
+  "timeout": 6,
+  "hide-on-action": true,
+  "widgets": ["buttons-grid", "volume", "backlight", "mpris", "title", "dnd", "notifications"],
+  "widget-config": {
+    "title": { "text": "Notifications", "clear-all-button": true, "button-text": "Clear" },
+    "dnd": { "text": "Do not disturb" },
+    "volume": { "label": "", "show-per-app": false },
+    "backlight": { "label": "󰃟" },
+    "mpris": { "image-size": 64, "image-radius": 10 },
+    "buttons-grid": {
+      "actions": [
+        { "label": "", "type": "toggle", "active": false,
+          "command": "sh -c '[ \"$SWAYNC_TOGGLE_STATE\" = true ] && nmcli radio wifi on || nmcli radio wifi off'",
+          "update-command": "sh -c '[ \"$(nmcli radio wifi)\" = enabled ] && echo true || echo false'" },
+        { "label": "", "command": "sh -c 'swaync-client -cp; kitty --class nmtui -e nmtui'" },
+        { "label": "", "type": "toggle", "active": false,
+          "command": "sh -c '[ \"$SWAYNC_TOGGLE_STATE\" = true ] && bluetoothctl power on || bluetoothctl power off'",
+          "update-command": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && echo true || echo false'" },
+        { "label": "󰂯", "command": "sh -c 'swaync-client -cp; blueman-manager'" },
+        { "label": "", "command": "sh -c 'swaync-client -cp; loginctl lock-session'" },
+        { "label": "󰤄", "command": "sh -c 'swaync-client -cp; systemctl suspend'" },
+        { "label": "", "command": "systemctl reboot" },
+        { "label": "⏻", "command": "systemctl poweroff" }
+      ]
+    }
+  }
+}

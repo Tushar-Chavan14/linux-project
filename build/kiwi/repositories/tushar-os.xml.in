@@ -1,0 +1,7 @@
+<image>
+	<!-- Locally built tushar-os packages (packaging/build-rpms.sh → out/rpms) -->
+	<repository type="rpm-md" alias="tushar-os-local" priority="1" imageinclude="false">
+		<source path="this://./local-repo"/>
+	</repository>
+@COPR_REPOS@
+</image>

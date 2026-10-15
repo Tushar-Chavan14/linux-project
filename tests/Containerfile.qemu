@@ -1,0 +1,3 @@
+ARG FEDORA_VERSION=44
+FROM registry.fedoraproject.org/fedora:${FEDORA_VERSION}
+RUN dnf -y install qemu-system-x86-core qemu-device-display-virtio-vga qemu-device-display-virtio-gpu qemu-ui-opengl edk2-ovmf socat ImageMagick python3 && dnf clean all

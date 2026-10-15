@@ -1,0 +1,79 @@
+// tushar-os top bar — portfolio layout: workspaces | clock | status
+{
+  "layer": "top",
+  "position": "top",
+  "height": 32,
+  "margin-top": 6,
+  "margin-left": 10,
+  "margin-right": 10,
+  "spacing": 4,
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["tray", "network", "bluetooth", "pulseaudio", "battery", "custom/notifications", "custom/power"],
+
+  "hyprland/workspaces": {
+    "format": "{id}",
+    "on-click": "activate",
+    "persistent-workspaces": { "*": 5 }
+  },
+  "clock": {
+    "format": "{:%a %b %d  %I:%M %p}",
+    "tooltip-format": "<tt>{calendar}</tt>",
+    "calendar": {
+      "mode": "month",
+      "format": {
+        "today": "<span color='#cba6f7'><b>{}</b></span>",
+        "weekdays": "<span color='#89dceb'>{}</span>"
+      }
+    }
+  },
+  "tray": { "icon-size": 16, "spacing": 8 },
+  "network": {
+    "format-wifi": "",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰤭",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+    "on-click": "swaync-client -t -sw"
+  },
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "󰂲",
+    "format-connected": "󰂱",
+    "tooltip-format-connected": "{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "on-click": "swaync-client -t -sw"
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "󰝟",
+    "format-icons": { "default": ["", "", ""] },
+    "tooltip-format": "{volume}%",
+    "on-click": "pavucontrol",
+    "on-click-right": "swayosd-client --output-volume mute-toggle"
+  },
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
+    "states": { "warning": 25, "critical": 12 }
+  },
+  "custom/notifications": {
+    "exec": "swaync-client -swb",
+    "return-type": "json",
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "󰂚", "none": "󰂜",
+      "dnd-notification": "󰂛", "dnd-none": "󰂛",
+      "inhibited-notification": "󰂚", "inhibited-none": "󰂜",
+      "dnd-inhibited-notification": "󰂛", "dnd-inhibited-none": "󰂛"
+    },
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+  "custom/power": {
+    "format": "⏻",
+    "tooltip": false,
+    "on-click": "~/.config/rofi/scripts/power.sh"
+  }
+}

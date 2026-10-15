@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  tushar-os image description. Built on top of Fedora's own KIWI descriptions
+  (fetched by build/build-iso.sh); only the pieces a live Hyprland ISO needs
+  are included.
+-->
+<image schemaversion="7.4" name="TusharOS">
+	<description type="system">
+		<author>Tushar Chavan</author>
+		<contact>tusharchavan166@gmail.com</contact>
+		<specification>tushar-os: Fedora-based Hyprland developer desktop</specification>
+	</description>
+	<preferences>
+		<version>@FEDORA_VERSION@</version>
+		<packagemanager>dnf5</packagemanager>
+		<locale>en_US</locale>
+		<keytable>us</keytable>
+		<timezone>UTC</timezone>
+		<release-version>@FEDORA_VERSION@</release-version>
+	</preferences>
+	<include from="this://./repositories/core.xml"/>
+	<include from="this://./repositories/tushar-os.xml"/>
+	<include from="this://./components/common.xml"/>
+	<include from="this://./components/boot.xml"/>
+	<include from="this://./components/desktops/common.xml"/>
+	<include from="this://./components/liveinstall.xml"/>
+	<include from="this://./components/users.xml"/>
+	<include from="this://./teams/tushar-os.xml"/>
+	<packages type="bootstrap">
+		<package name="filesystem"/>
+	</packages>
+</image>

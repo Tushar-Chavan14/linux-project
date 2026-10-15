@@ -1,0 +1,40 @@
+// Catppuccin Mocha
+$base: #1e1e2e;
+$mantle: #181825;
+$text: #cdd6f4;
+$subtext: #a6adc8;
+$sky: #89dceb;
+$pink: #f5c2e7;
+$teal: #94e2d5;
+$lavender: #b4befe;
+
+* { all: unset; font-family: "Inter", sans-serif; color: $text; }
+
+.card {
+  background-color: rgba(24, 24, 37, 0.72);
+  border: 1px solid rgba(205, 214, 244, 0.06);
+  border-radius: 20px;
+  padding: 18px 16px;
+}
+
+.calendar {
+  .day { padding: 1px 0 1px 24px; }
+  .num { font-family: "JetBrains Mono", monospace; font-size: 12px; }
+  .today { padding: 10px 0 10px 8px; }
+  .today .num { font-family: "Orbitron", "Nasalization", sans-serif; font-size: 44px; color: $sky; }
+  .meta { font-family: "Orbitron", "Nasalization", sans-serif; font-size: 13px; color: $sky; margin-left: 10px; }
+}
+
+.clock {
+  label { font-family: "Orbitron", "Nasalization", sans-serif; font-size: 80px; }
+  .h { color: $pink; }
+  .sep { color: $sky; }
+  .m { color: $teal; }
+  .ampm { color: $lavender; font-size: 22px; margin-left: 8px; margin-top: 46px; }
+}
+
+.info {
+  .row { padding: 6px 4px; }
+  .k { min-width: 84px; font-size: 13px; font-weight: 600; }
+  .v { font-size: 13px; color: $subtext; }
+}

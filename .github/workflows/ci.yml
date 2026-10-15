@@ -1,0 +1,41 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint (shellcheck, Hyprland config, JSON)
+        run: |
+          docker build -q -t tushar-os-lint -f tests/Containerfile tests
+          docker run --rm -v "$PWD:/src:ro" tushar-os-lint bash -euo pipefail -c '
+            cd /src
+            shellcheck -S warning -x -P firstboot \
+              firstboot/tushar-os-welcome firstboot/lib.sh firstboot/modules/*.sh \
+              dotfiles/*/scripts/*.sh packaging/*.sh packaging/desktop/tushar-os-reset-config \
+              branding/*.sh branding/live/livesys-hyprland build/*.sh tests/*.sh
+            python3 -c "import json; json.load(open(\"dotfiles/swaync/config.json\"))"
+            useradd -m t
+            su t -c "export XDG_RUNTIME_DIR=/tmp/xdg; mkdir -p /tmp/xdg ~/.config; chmod 700 /tmp/xdg
+                     cp -r /src/dotfiles/hypr ~/.config/hypr
+                     Hyprland --verify-config -c ~/.config/hypr/hyprland.conf | tee /tmp/v.log; grep -q \"config ok\" /tmp/v.log"
+          '
+
+  rpms:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: .cache/go-build
+          key: go-build-${{ hashFiles('packaging/extra/nwg-dock-hyprland.spec') }}
+      - run: packaging/build-rpms.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rpms
+          path: out/rpms/*.rpm

@@ -1,0 +1,33 @@
+#!/usr/bin/sh
+#
+# livesys-hyprland: tushar-os live session setup (modelled on livesys-sway)
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+SESSION_FILE="hyprland.desktop"
+
+# Autologin liveuser straight into Hyprland
+mkdir -p /etc/sddm.conf.d
+cat > /etc/sddm.conf.d/50-livesys.conf << SDDM_EOF
+[Autologin]
+User=liveuser
+Session=${SESSION_FILE}
+SDDM_EOF
+
+# Show "Install to Hard Drive" in rofi and pin it first in the dock
+sed -i -e 's/NoDisplay=true/NoDisplay=false/' /usr/share/applications/liveinst.desktop
+mkdir -p /home/liveuser/.cache /home/liveuser/.local/state/tushar-os
+sed -i '1i liveinst' /home/liveuser/.cache/nwg-dock-pinned 2>/dev/null || echo liveinst > /home/liveuser/.cache/nwg-dock-pinned
+
+# The first-boot setup belongs on the installed system, not the live session
+touch /home/liveuser/.local/state/tushar-os/welcome-done
+
+# Don't lock or suspend the live session
+cat > /home/liveuser/.config/hypr/hypridle.conf << 'IDLE_EOF'
+general {
+}
+IDLE_EOF
+cat >> /home/liveuser/.config/hypr/user.conf << 'HYPR_EOF'
+exec-once = notify-send -i tushar-os-logo "Welcome to tushar-os (live)" "Open 'Install to Hard Drive' from the dock or SUPER+Space to install."
+HYPR_EOF
+
+chown -R liveuser:liveuser /home/liveuser

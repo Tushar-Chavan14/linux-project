@@ -1,0 +1,11 @@
+configuration {
+  modi: "drun,run,window,emoji";
+  show-icons: true;
+  icon-theme: "Papirus-Dark";
+  display-drun: "";
+  display-run: "";
+  display-window: "";
+  drun-display-format: "{name}";
+  font: "Inter 12";
+}
+@theme "~/.config/rofi/catppuccin-glass.rasi"

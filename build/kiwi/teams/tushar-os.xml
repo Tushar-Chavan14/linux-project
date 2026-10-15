@@ -1,0 +1,51 @@
+<image>
+	<profiles>
+		<profile name="TusharOS-Desktop" description="tushar-os Hyprland desktop">
+			<requires profile="DesktopCommon"/>
+		</profile>
+		<profile name="TusharOS-Live" description="tushar-os Live ISO">
+			<requires profile="TusharOS-Desktop"/>
+			<requires profile="LiveInstall"/>
+		</profile>
+	</profiles>
+	<packages type="bootstrap" patternType="plusRecommended" profiles="TusharOS-Live">
+		<!-- Fedora Remix rules: no fedora-release / fedora-logos -->
+		<package name="tushar-os-release"/>
+		<package name="generic-logos"/>
+	</packages>
+	<packages type="image" patternType="plusRecommended" profiles="TusharOS-Desktop">
+		<!-- Base OS (Fedora spins get this via their *-desktop-environment group) -->
+		<namedCollection name="core"/>
+		<package name="selinux-policy-targeted"/>
+		<package name="policycoreutils"/>
+		<!-- Desktop: pulls the whole Hyprland stack, themes, fonts, welcome app -->
+		<package name="tushar-os-desktop"/>
+		<package name="tushar-os-sddm-theme"/>
+		<package name="sddm"/>
+		<package name="sddm-wayland-generic"/>
+		<package name="firefox"/>
+		<package name="NetworkManager-wifi"/>
+		<package name="bluez"/>
+		<package name="pipewire-pulseaudio"/>
+		<package name="wireplumber"/>
+		<package name="xdg-user-dirs"/>
+		<package name="xdg-utils"/>
+		<package name="gnome-keyring"/>
+		<package name="gvfs"/>
+		<package name="file-roller"/>
+		<package name="loupe"/>
+		<package name="flatpak"/>
+		<package name="firewalld"/>
+		<package name="plymouth-theme-spinner"/>
+		<ignore name="fedora-logos"/>
+		<ignore name="fedora-release"/>
+		<ignore name="fedora-release-common"/>
+		<ignore name="fedora-release-identity-basic"/>
+		<ignore name="generic-release"/>
+		<ignore name="generic-release-common"/>
+		<ignore name="gnome-shell"/>
+	</packages>
+	<packages type="image" patternType="plusRecommended" profiles="TusharOS-Live">
+		<package name="tushar-os-live"/>
+	</packages>
+</image>

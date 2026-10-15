@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# tushar-os first-boot setup. Safe to re-run: every step is idempotent.
+set -uo pipefail
+LIB=${TOS_LIB:-/usr/share/tushar-os/welcome}
+# shellcheck source=lib.sh
+source "$LIB/lib.sh"
+for m in "$LIB"/modules/*.sh; do
+  # shellcheck source=/dev/null
+  source "$m"
+done
+
+declare -A MODULES=(
+  ["GPU drivers (auto-detect)"]=module_gpu
+  ["RPM Fusion + media codecs"]=module_rpmfusion
+  ["Chrome, VSCode, Spotify, Claude Code, KDE Connect"]=module_apps
+  ["Claude Desktop (unofficial on Fedora)"]=module_claude_desktop
+  ["CLI essentials"]=module_cli
+  ["Runtimes via mise (Node, Bun, Go, Python)"]=module_runtimes
+  ["Containers (Podman, Distrobox, optional Docker)"]=module_containers
+  ["PostgreSQL + pgAdmin 4"]=module_postgres
+  ["MySQL + MySQL Workbench"]=module_mysql
+  ["DBeaver + Bruno"]=module_apitools
+)
+ORDER=("GPU drivers (auto-detect)" "RPM Fusion + media codecs" "Chrome, VSCode, Spotify, Claude Code, KDE Connect"
+       "Claude Desktop (unofficial on Fedora)" "CLI essentials" "Runtimes via mise (Node, Bun, Go, Python)"
+       "Containers (Podman, Distrobox, optional Docker)" "PostgreSQL + pgAdmin 4" "MySQL + MySQL Workbench" "DBeaver + Bruno")
+
+if [[ ${1:-} == --all ]]; then
+  picked=$(printf '%s\n' "${ORDER[@]}")
+else
+  gum style --border rounded --border-foreground 183 --padding "1 3" --margin 1 \
+    "$(gum style --foreground 183 --bold 'Welcome to tushar-os')" \
+    "Pick what to set up. Space toggles, Enter confirms." "Re-run any time: tushar-os-welcome"
+  defaults=$(IFS=,; echo "${ORDER[*]:0:3},${ORDER[4]},${ORDER[5]}")
+  picked=$(gum choose --no-limit --height 14 --selected="$defaults" "${ORDER[@]}") || exit 0
+fi
+[[ -z $picked ]] && exit 0
+
+if [[ -n $SUDO ]]; then sudo -v || exit 1; fi
+# Keep sudo alive for long installs
+( while true; do sudo -n true 2>/dev/null; sleep 50; kill -0 $$ 2>/dev/null || exit; done ) &
+
+failed=()
+while IFS= read -r item; do
+  [[ -z $item ]] && continue
+  "${MODULES[$item]}" || failed+=("$item")
+done <<<"$picked"
+
+touch "$TOS_STATE/welcome-done"
+echo
+if ((${#failed[@]})); then
+  warn "Finished with problems in: ${failed[*]} (log: $TOS_LOG)"
+else
+  gum style --foreground 151 --bold "All done. Log: $TOS_LOG"
+fi
+gum confirm "Reboot now? (needed after GPU driver install)" --default=false && systemctl reboot

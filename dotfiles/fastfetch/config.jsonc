@@ -1,0 +1,5 @@
+{
+  "logo": { "source": "/usr/share/tushar-os/logo.txt", "color": { "1": "magenta" } },
+  "display": { "separator": "  ", "color": { "keys": "magenta" } },
+  "modules": ["title", "separator", "os", "kernel", "uptime", "packages", "shell", "wm", "terminal", "cpu", "gpu", "memory", "disk", "battery", "colors"]
+}

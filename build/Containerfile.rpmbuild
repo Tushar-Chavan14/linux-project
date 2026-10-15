@@ -1,0 +1,5 @@
+ARG FEDORA_VERSION=44
+FROM registry.fedoraproject.org/fedora:${FEDORA_VERSION}
+RUN dnf -y install rpm-build rpmdevtools dnf-plugins-core rpmlint fontpackages-devel unzip \
+        golang git-core gtk3-devel gtk-layer-shell-devel gobject-introspection-devel && \
+    dnf clean all && rpmdev-setuptree

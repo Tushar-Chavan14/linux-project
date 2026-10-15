@@ -1,0 +1,7 @@
+out/
+*.iso
+.cache/
+
+graphify-out
+
+CLAUDE.md

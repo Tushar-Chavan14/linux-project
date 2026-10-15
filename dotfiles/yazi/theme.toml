@@ -1,0 +1,11 @@
+[mgr]
+cwd = { fg = "#94e2d5" }
+hovered = { fg = "#1e1e2e", bg = "#cba6f7" }
+border_style = { fg = "#7f849c" }
+
+[status]
+separator_open = ""
+separator_close = ""
+
+[mode]
+normal_main = { fg = "#1e1e2e", bg = "#cba6f7", bold = true }

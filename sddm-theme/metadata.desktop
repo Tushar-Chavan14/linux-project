@@ -1,0 +1,10 @@
+[SddmGreeterTheme]
+Name=tushar-os
+Description=Catppuccin Mocha glass login, matching the tushar-os desktop
+Author=Tushar Chavan
+License=MIT
+Type=sddm-theme
+Version=0.1
+MainScript=Main.qml
+ConfigFile=theme.conf
+QtVersion=6

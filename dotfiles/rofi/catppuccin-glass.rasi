@@ -1,0 +1,41 @@
+/* Spotlight-style glass card, like the portfolio's cards */
+* {
+  base: #1e1e2ebf;
+  surface: #31324480;
+  text: #cdd6f4;
+  subtext: #a6adc8;
+  mauve: #cba6f7;
+  background-color: transparent;
+  text-color: @text;
+}
+
+window {
+  width: 640px;
+  location: center;
+  anchor: center;
+  y-offset: -80px;
+  background-color: @base;
+  border: 1px;
+  border-color: #cdd6f414;
+  border-radius: 18px;
+}
+
+mainbox { padding: 16px; spacing: 12px; children: [ inputbar, listview ]; }
+
+inputbar {
+  background-color: @surface;
+  border-radius: 12px;
+  padding: 12px 14px;
+  spacing: 10px;
+  children: [ prompt, entry ];
+}
+prompt { text-color: @mauve; }
+entry { placeholder: "Search apps…"; placeholder-color: @subtext; }
+
+listview { lines: 7; columns: 1; spacing: 4px; fixed-height: false; scrollbar: false; }
+
+element { padding: 10px 12px; border-radius: 10px; spacing: 12px; }
+element-icon { size: 28px; }
+element-text { vertical-align: 0.5; }
+element selected.normal { background-color: #cba6f733; }
+element-text selected { text-color: @text; }

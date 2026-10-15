@@ -1,0 +1,58 @@
+/* Catppuccin Mocha glass — mirrors desktop-portfolio-tushar top bar */
+@define-color base #1e1e2e;
+@define-color surface0 #313244;
+@define-color text #cdd6f4;
+@define-color subtext #a6adc8;
+@define-color mauve #cba6f7;
+@define-color red #f38ba8;
+@define-color yellow #f9e2af;
+
+* {
+  font-family: "Inter", "Symbols Nerd Font", sans-serif;
+  font-size: 13px;
+  min-height: 0;
+  border: none;
+}
+
+window#waybar {
+  background: alpha(@base, 0.55);
+  border: 1px solid alpha(@text, 0.08);
+  border-radius: 14px;
+  color: @text;
+}
+
+tooltip {
+  background: alpha(@base, 0.92);
+  border: 1px solid alpha(@mauve, 0.35);
+  border-radius: 10px;
+}
+
+#workspaces { margin-left: 6px; }
+#workspaces button {
+  color: @subtext;
+  padding: 0 8px;
+  margin: 4px 2px;
+  border-radius: 8px;
+  background: transparent;
+}
+#workspaces button.empty { color: alpha(@subtext, 0.45); }
+#workspaces button.active {
+  color: @base;
+  background: @mauve;
+}
+#workspaces button:hover { background: alpha(@mauve, 0.25); color: @text; }
+
+#clock { font-weight: 500; }
+
+#tray, #network, #bluetooth, #pulseaudio, #battery,
+#custom-notifications, #custom-power {
+  padding: 0 8px;
+  margin: 4px 0;
+  border-radius: 8px;
+}
+#network:hover, #bluetooth:hover, #pulseaudio:hover,
+#custom-notifications:hover, #custom-power:hover { background: alpha(@text, 0.08); }
+
+#battery.warning:not(.charging) { color: @yellow; }
+#battery.critical:not(.charging) { color: @red; }
+#custom-power { margin-right: 6px; color: @mauve; }

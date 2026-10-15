@@ -1,0 +1,9 @@
+# Lint environment: Fedora + the desktop stack, used to validate dotfiles headlessly.
+ARG FEDORA_VERSION=44
+FROM registry.fedoraproject.org/fedora:${FEDORA_VERSION}
+RUN dnf -y install dnf-plugins-core && \
+    dnf -y copr enable sdegler/hyprland && \
+    dnf -y copr enable erikreider/swayosd && \
+    dnf -y install hyprland hyprlock hypridle hyprpaper eww-git waybar rofi \
+        SwayNotificationCenter kitty fish ShellCheck jq python3 && \
+    dnf clean all

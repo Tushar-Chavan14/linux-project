@@ -1,0 +1,51 @@
+# Minimal two-line prompt, Catppuccin Mocha
+format = "$directory$git_branch$git_status$nodejs$bun$golang$python$cmd_duration\n$character"
+add_newline = true
+palette = "mocha"
+
+[character]
+success_symbol = "[❯](mauve)"
+error_symbol = "[❯](red)"
+
+[directory]
+style = "bold lavender"
+truncation_length = 3
+
+[git_branch]
+symbol = " "
+style = "pink"
+
+[git_status]
+style = "maroon"
+
+[nodejs]
+format = "[ $version]($style) "
+style = "green"
+
+[bun]
+format = "[🥟 $version]($style) "
+style = "peach"
+
+[golang]
+format = "[ $version]($style) "
+style = "sky"
+
+[python]
+format = "[ $version]($style) "
+style = "yellow"
+
+[cmd_duration]
+format = "[ $duration]($style) "
+style = "overlay0"
+
+[palettes.mocha]
+mauve = "#cba6f7"
+red = "#f38ba8"
+lavender = "#b4befe"
+pink = "#f5c2e7"
+maroon = "#eba0ac"
+green = "#a6e3a1"
+peach = "#fab387"
+sky = "#89dceb"
+yellow = "#f9e2af"
+overlay0 = "#6c7086"

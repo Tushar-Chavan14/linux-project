@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=tushar-os Setup
+Comment=Install apps, drivers and developer tools
+Exec=kitty --title tushar-os-welcome tushar-os-welcome
+Icon=tushar-os-logo
+Terminal=false
+Type=Application
+Categories=System;Settings;

@@ -1,0 +1,3 @@
+ARG FEDORA_VERSION=44
+FROM registry.fedoraproject.org/fedora:${FEDORA_VERSION}
+RUN dnf -y install kiwi kiwi-systemdeps kiwi-boxed-plugin qemu-kvm isomd5sum distribution-gpg-keys createrepo_c git-core python3 && dnf clean all
