@@ -9,7 +9,7 @@ srpm:
 	dnf -y install rpm-build rpmdevtools git-core
 	./packaging/make-sources.sh
 	mkdir -p "$(outdir)"
-	cd .cache/rpm-sources && spectool -g "$(CURDIR)/$(spec)"
+	cd .cache/rpm-sources && spectool -g "$(abspath $(spec))"
 	rpmbuild -bs "$(spec)" \
 	  --define "_sourcedir $(CURDIR)/.cache/rpm-sources" \
 	  --define "_srcrpmdir $(outdir)"
