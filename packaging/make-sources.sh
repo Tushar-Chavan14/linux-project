@@ -10,8 +10,8 @@ pack() { # name, paths...
   tar -C "$root" --transform "s,^,$name-$v/," --exclude-vcs -czf "$out/$name-$v.tar.gz" LICENSE "$@"
   echo "$out/$name-$v.tar.gz"
 }
-pack tushar-os-desktop dotfiles packaging/desktop
-[[ -f $root/packaging/tushar-os-branding.spec ]] && pack tushar-os-branding branding config.env
-[[ -f $root/packaging/tushar-os-sddm-theme.spec ]] && pack tushar-os-sddm-theme sddm-theme
-[[ -f $root/packaging/tushar-os-welcome.spec ]] && pack tushar-os-welcome firstboot
+pack hyprdev-desktop dotfiles packaging/desktop
+[[ -f $root/packaging/hyprdev-branding.spec ]] && pack hyprdev-branding branding config.env
+[[ -f $root/packaging/hyprdev-sddm-theme.spec ]] && pack hyprdev-sddm-theme sddm-theme
+[[ -f $root/packaging/hyprdev-welcome.spec ]] && pack hyprdev-welcome firstboot
 exit 0

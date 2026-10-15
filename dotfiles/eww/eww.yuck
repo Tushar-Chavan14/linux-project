@@ -1,4 +1,4 @@
-;; tushar-os desktop widgets — Wayland port of ~/.config/conky/calendarVertical
+;; hyprdev desktop widgets — Wayland port of ~/.config/conky/calendarVertical
 
 (defpoll calendar :interval "60s" :initial "[]" "scripts/calendar.sh")
 (defpoll hour   :interval "5s" "date +%I")

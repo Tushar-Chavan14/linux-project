@@ -43,4 +43,4 @@ install -Dm644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 
 %changelog
 * Thu Oct 15 2026 Tushar Chavan <tusharchavan166@gmail.com> - 0.4.11-1
-- Initial package for tushar-os
+- Initial package for hyprdev

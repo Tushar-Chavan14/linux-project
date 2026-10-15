@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # Weather via Open-Meteo (no API key). Location comes from
-# ~/.config/tushar-os/location (a city name), else IP geolocation.
+# ~/.config/hyprdev/location (a city name), else IP geolocation.
 # Caches the last good result so the widget still shows something offline.
 set -u
-cache="${XDG_CACHE_HOME:-$HOME/.cache}/tushar-os/weather.json"
+cache="${XDG_CACHE_HOME:-$HOME/.cache}/hyprdev/weather.json"
 mkdir -p "$(dirname "$cache")"
-cfg="${XDG_CONFIG_HOME:-$HOME/.config}/tushar-os/location"
+cfg="${XDG_CONFIG_HOME:-$HOME/.config}/hyprdev/location"
 
 fallback() { [[ -s $cache ]] && cat "$cache" || echo '{}'; exit 0; }
 

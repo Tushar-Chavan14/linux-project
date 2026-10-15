@@ -1,14 +1,14 @@
-# Release identity for tushar-os, modelled on fedora-release-common.
+# Release identity for hyprdev, modelled on fedora-release-common.
 # A Fedora Remix must not ship fedora-release / fedora-logos. generic-release
 # can't be used alongside a custom identity (generic-release-common requires
 # it), so this package provides the whole set of release files itself.
-Name:           tushar-os-release
+Name:           hyprdev-release
 Version:        %{fedora}
 Release:        2
-Summary:        tushar-os release files (os-release, presets, dist macros)
+Summary:        hyprdev release files (os-release, presets, dist macros)
 License:        MIT
 URL:            https://github.com/Tushar-Chavan14/linux-project
-Source0:        tushar-os-branding-0.1.0.tar.gz
+Source0:        hyprdev-branding-0.1.0.tar.gz
 BuildArch:      noarch
 
 Provides:       system-release
@@ -22,10 +22,10 @@ Conflicts:      fedora-release-common generic-release generic-release-common
 Requires:       fedora-repos(%{version})
 
 %description
-os-release identity for tushar-os, a Fedora %{version} based Hyprland remix.
+os-release identity for hyprdev, a Fedora %{version} based Hyprland remix.
 
 %prep
-%setup -q -n tushar-os-branding-0.1.0
+%setup -q -n hyprdev-branding-0.1.0
 
 %install
 source ./config.env
@@ -35,11 +35,11 @@ install -Dm644 os-release %{buildroot}%{_prefix}/lib/os-release
 install -d %{buildroot}%{_sysconfdir}
 ln -s ../usr/lib/os-release %{buildroot}%{_sysconfdir}/os-release
 
-echo "$DISTRO_PRETTY release %{version}" > %{buildroot}%{_prefix}/lib/tushar-os-release
-ln -s ../usr/lib/tushar-os-release %{buildroot}%{_sysconfdir}/tushar-os-release
-ln -s tushar-os-release %{buildroot}%{_sysconfdir}/system-release
-ln -s tushar-os-release %{buildroot}%{_sysconfdir}/redhat-release
-ln -s tushar-os-release %{buildroot}%{_sysconfdir}/fedora-release
+echo "$DISTRO_PRETTY release %{version}" > %{buildroot}%{_prefix}/lib/hyprdev-release
+ln -s ../usr/lib/hyprdev-release %{buildroot}%{_sysconfdir}/hyprdev-release
+ln -s hyprdev-release %{buildroot}%{_sysconfdir}/system-release
+ln -s hyprdev-release %{buildroot}%{_sysconfdir}/redhat-release
+ln -s hyprdev-release %{buildroot}%{_sysconfdir}/fedora-release
 echo "cpe:/o:$DISTRO_NAME:$DISTRO_NAME:%{version}" > %{buildroot}%{_prefix}/lib/system-release-cpe
 ln -s ../usr/lib/system-release-cpe %{buildroot}%{_sysconfdir}/system-release-cpe
 
@@ -63,12 +63,12 @@ install -Dm644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 %files
 %license %{_licensedir}/%{name}/LICENSE
 %{_prefix}/lib/os-release
-%{_prefix}/lib/tushar-os-release
+%{_prefix}/lib/hyprdev-release
 %{_prefix}/lib/system-release-cpe
 %{_prefix}/lib/issue
 %{_prefix}/lib/issue.net
 %{_sysconfdir}/os-release
-%{_sysconfdir}/tushar-os-release
+%{_sysconfdir}/hyprdev-release
 %{_sysconfdir}/system-release
 %{_sysconfdir}/redhat-release
 %{_sysconfdir}/fedora-release

@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
-# Restore tushar-os default dotfiles for the current user.
-# Existing files are backed up to ~/.config/tushar-os/backup-<timestamp>/.
+# Restore hyprdev default dotfiles for the current user.
+# Existing files are backed up to ~/.config/hyprdev/backup-<timestamp>/.
 set -euo pipefail
-src=/usr/share/tushar-os/skel
+src=/usr/share/hyprdev/skel
 [[ -d $src ]] || { echo "missing $src" >&2; exit 1; }
 stamp=$(date +%Y%m%d-%H%M%S)
-backup="$HOME/.config/tushar-os/backup-$stamp"
+backup="$HOME/.config/hyprdev/backup-$stamp"
 
 cd "$src"
 while IFS= read -r -d '' f; do
   rel=${f#./}
   dest="$HOME/$rel"
   # user.conf, location and the chosen wallpaper are personal: never overwrite them.
-  if [[ -e $dest || -L $dest ]] && [[ $rel == */user.conf || $rel == */tushar-os/location || $rel == .config/hypr/wallpaper ]]; then continue; fi
+  if [[ -e $dest || -L $dest ]] && [[ $rel == */user.conf || $rel == */hyprdev/location || $rel == .config/hypr/wallpaper ]]; then continue; fi
   if [[ -e $dest ]] && ! cmp -s "$f" "$dest"; then
     mkdir -p "$backup/$(dirname "$rel")"
     cp -a "$dest" "$backup/$rel"

@@ -27,4 +27,4 @@ install -Dm644 %{SOURCE1} %{buildroot}%{_licensedir}/%{name}/LICENSE
 
 %changelog
 * Thu Oct 15 2026 Tushar Chavan <tusharchavan166@gmail.com> - 2.0.0-1
-- Initial package for tushar-os
+- Initial package for hyprdev

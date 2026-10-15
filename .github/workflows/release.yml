@@ -56,5 +56,5 @@ jobs:
         run: |
           tag="${GITHUB_REF_NAME}"
           [ "$GITHUB_REF_TYPE" = tag ] || tag="snapshot-$(date +%Y%m%d)"
-          gh release create "$tag" out/iso/* --title "tushar-os $tag" --generate-notes \
+          gh release create "$tag" out/iso/* --title "hyprdev $tag" --generate-notes \
             --notes-file docs/RELEASE_NOTES_TEMPLATE.md

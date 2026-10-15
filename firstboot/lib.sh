@@ -1,6 +1,6 @@
-# Shared helpers for tushar-os-welcome modules. Sourced, not executed.
+# Shared helpers for hyprdev-welcome modules. Sourced, not executed.
 # shellcheck shell=bash
-TOS_STATE="${XDG_STATE_HOME:-$HOME/.local/state}/tushar-os"
+TOS_STATE="${XDG_STATE_HOME:-$HOME/.local/state}/hyprdev"
 TOS_LOG="$TOS_STATE/welcome.log"
 mkdir -p "$TOS_STATE"
 export FEDORA; FEDORA=$(rpm -E %fedora)
