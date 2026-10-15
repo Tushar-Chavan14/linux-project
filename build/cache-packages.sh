@@ -5,6 +5,7 @@
 #   build/cache-packages.sh            # after a successful build-iso.sh
 #   CACHE=0 build/build-iso.sh         # ignore the cache for one build
 set -euo pipefail
+export LC_ALL=C   # comm needs the same sort order on host and in the container
 root="$(cd "$(dirname "$0")/.." && pwd)"
 # shellcheck source=../config.env
 source "$root/config.env"
@@ -21,6 +22,7 @@ for c in "${COPRS[@]}"; do copr_args+=" $c"; done
 docker run --rm --dns 1.1.1.1 --dns 8.8.8.8 \
   -v "$cache:/cache" -v "$root/out/rpms:/local:ro" \
   "registry.fedoraproject.org/fedora:$FEDORA_VERSION" bash -euo pipefail -c '
+    export LC_ALL=C
     dnf -y -q install dnf-plugins-core createrepo_c >/dev/null
     for c in '"$copr_args"'; do dnf -y -q copr enable "$c" >/dev/null; done
     printf "[local]\nname=local\nbaseurl=file:///local\ngpgcheck=0\n" > /etc/yum.repos.d/local.repo

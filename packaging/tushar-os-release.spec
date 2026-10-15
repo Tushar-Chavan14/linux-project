@@ -7,7 +7,7 @@ Version:        %{fedora}
 Release:        2
 Summary:        tushar-os release files (os-release, presets, dist macros)
 License:        MIT
-URL:            https://github.com/tushar/tushar-os
+URL:            https://github.com/Tushar-Chavan14/linux-project
 Source0:        tushar-os-branding-0.1.0.tar.gz
 BuildArch:      noarch
 

@@ -3,7 +3,7 @@ Version:        0.1.0
 Release:        1%{?dist}
 Summary:        tushar-os first-boot setup (drivers, apps, developer tools)
 License:        MIT
-URL:            https://github.com/tushar/tushar-os
+URL:            https://github.com/Tushar-Chavan14/linux-project
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 Requires:       gum jq curl pciutils mokutil flatpak dnf5-plugins kitty

@@ -3,7 +3,7 @@ Version:        0.1.0
 Release:        2%{?dist}
 Summary:        tushar-os wallpapers, logos and release identity
 License:        MIT
-URL:            https://github.com/tushar/tushar-os
+URL:            https://github.com/Tushar-Chavan14/linux-project
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 

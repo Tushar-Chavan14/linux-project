@@ -3,7 +3,7 @@ Version:        0.1.0
 Release:        3%{?dist}
 Summary:        tushar-os Hyprland desktop: dotfiles, widgets and session
 License:        MIT
-URL:            https://github.com/tushar/tushar-os
+URL:            https://github.com/Tushar-Chavan14/linux-project
 # Built by packaging/make-sources.sh from dotfiles/ and packaging/desktop/
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
