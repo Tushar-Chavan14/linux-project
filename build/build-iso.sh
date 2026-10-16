@@ -38,6 +38,12 @@ copr_xml=""
 for c in "${COPRS[@]}"; do
   owner=${c%%/*} proj=${c##*/}
   base="https://download.copr.fedorainfracloud.org/results/$owner/$proj"
+  # A new COPR (e.g. our own before its first build) has no repo yet: skip it
+  # instead of failing the whole image build.
+  if ! curl -fsIL --max-time 20 "$base/fedora-$FEDORA_VERSION-x86_64/repodata/repomd.xml" >/dev/null; then
+    echo "WARNING: COPR $c has no fedora-$FEDORA_VERSION-x86_64 repo yet - skipping it" >&2
+    continue
+  fi
   copr_xml+="	<repository type=\"rpm-md\" alias=\"copr-$owner-$proj\" imageinclude=\"true\">
 		<source path=\"$base/fedora-\$releasever-\$basearch/\">
 			<signing key=\"$base/pubkey.gpg\"/>
@@ -97,14 +103,14 @@ sed -i 's/system boxbuild --box universal/system boxbuild --box universal --box-
 # 4. Local repo of our packages
 # (inside the description dir: the isolated build VM only sees that tree)
 mkdir -p "$desc/local-repo"
-cp "$root"/out/rpms/*.noarch.rpm "$root"/out/rpms/*.x86_64.rpm "$desc/local-repo/"
+find "$root/out/rpms" -maxdepth 1 -name "*.rpm" ! -name "*.src.rpm" -exec cp -t "$desc/local-repo/" {} +
 # Hard links: instant, no extra disk space (same filesystem)
 [[ ${CACHE:-1} == 1 && -d $cache/pkg-cache/repodata ]] && cp -al "$cache/pkg-cache" "$desc/pkg-cache"
 
 # 5. Build — isolated: KIWI runs inside its own KVM VM (kiwi boxbuild), so the
 #    container needs only /dev/kvm. No --privileged, no host /dev: image
 #    scriptlets such as os-prober never see the host's disks.
-docker build -q -t hyprdev-kiwi --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
+docker build -q --network host -t hyprdev-kiwi --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
   -f "$root/build/Containerfile.kiwi" "$root/build" >/dev/null
 mkdir -p "$cache/kiwi-boxes"
 # RAM is backed by /dev/shm inside the container, so it must fit the box VM.

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=HyprDev Settings
+Comment=Display, wallpaper, desktop, keyboard, mouse and system settings
+Exec=hyprdev-settings
+Icon=preferences-system
+Terminal=false
+Type=Application
+Categories=Settings;System;
+Keywords=display;resolution;monitor;wallpaper;keyboard;mouse;network;bluetooth;sound;
+StartupNotify=true

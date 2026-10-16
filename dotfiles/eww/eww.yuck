@@ -7,6 +7,19 @@
 (defpoll sysinfo :interval "3s" :initial "{}" "scripts/sysinfo.sh")
 (defpoll weather :interval "900s" :initial "{}" "scripts/weather.sh")
 
+;; ---- desktop click-catcher ----
+;; Full-screen, transparent, below the widgets: right-click on the empty
+;; desktop opens the menu (Hyprland itself has no desktop surface).
+(defwindow desktop
+  :monitor 0
+  :geometry (geometry :x "0" :y "0" :width "100%" :height "100%" :anchor "top left")
+  :stacking "bottom"
+  :exclusive false
+  :focusable "none"
+  (eventbox :class "desktop"
+            :onrightclick "~/.config/hypr/scripts/desktop-menu.sh &"
+    (box)))
+
 ;; ---- vertical calendar strip ----
 (defwidget calendar-strip []
   (box :class "card calendar" :orientation "v" :space-evenly false

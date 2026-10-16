@@ -4,12 +4,16 @@
 # it), so this package provides the whole set of release files itself.
 Name:           hyprdev-release
 Version:        %{fedora}
-Release:        2
+Release:        3
 Summary:        hyprdev release files (os-release, presets, dist macros)
 License:        MIT
 URL:            https://github.com/Tushar-Chavan14/linux-project
 Source0:        hyprdev-branding-0.1.0.tar.gz
 BuildArch:      noarch
+# %%{_presetdir} etc. come from systemd-rpm-macros; the preset/macros/dnf files
+# we copy come from the build root's fedora-release-common.
+BuildRequires:  systemd-rpm-macros
+BuildRequires:  fedora-release-common
 
 Provides:       system-release
 Provides:       system-release(%{version})
@@ -82,6 +86,9 @@ install -Dm644 LICENSE %{buildroot}%{_licensedir}/%{name}/LICENSE
 %{_datadir}/dnf5/libdnf.conf.d/20-fedora-defaults.conf
 
 %changelog
+* Thu Oct 15 2026 Tushar Chavan <deepak@silverferndigital.com> - 44-3
+- BuildRequires systemd-rpm-macros and fedora-release-common (COPR buildroot)
+
 * Thu Oct 15 2026 Tushar Chavan <deepak@silverferndigital.com> - 44-2
 - Drop generic-logos dependency (broke glibc install ordering)
 

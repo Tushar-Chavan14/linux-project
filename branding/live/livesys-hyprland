@@ -13,10 +13,9 @@ User=liveuser
 Session=${SESSION_FILE}
 SDDM_EOF
 
-# Show "Install to Hard Drive" in rofi and pin it first in the dock
+# Show "Install to Hard Drive" in rofi and the dock (the dock skips NoDisplay entries)
 sed -i -e 's/NoDisplay=true/NoDisplay=false/' /usr/share/applications/liveinst.desktop
-mkdir -p /home/liveuser/.cache /home/liveuser/.local/state/hyprdev
-sed -i '1i liveinst' /home/liveuser/.cache/nwg-dock-pinned 2>/dev/null || echo liveinst > /home/liveuser/.cache/nwg-dock-pinned
+mkdir -p /home/liveuser/.local/state/hyprdev
 
 # The first-boot setup belongs on the installed system, not the live session
 touch /home/liveuser/.local/state/hyprdev/welcome-done
@@ -27,7 +26,7 @@ general {
 }
 IDLE_EOF
 cat >> /home/liveuser/.config/hypr/user.conf << 'HYPR_EOF'
-exec-once = notify-send -i hyprdev-logo "Welcome to hyprdev (live)" "Open 'Install to Hard Drive' from the dock or SUPER+Space to install."
+exec-once = notify-send -i hyprdev-logo "Welcome to HyprDev (live)" "Open 'Install to Hard Drive' from the dock or SUPER+Space to install."
 HYPR_EOF
 
 chown -R liveuser:liveuser /home/liveuser

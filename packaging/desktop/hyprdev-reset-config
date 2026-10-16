@@ -11,8 +11,8 @@ cd "$src"
 while IFS= read -r -d '' f; do
   rel=${f#./}
   dest="$HOME/$rel"
-  # user.conf, location and the chosen wallpaper are personal: never overwrite them.
-  if [[ -e $dest || -L $dest ]] && [[ $rel == */user.conf || $rel == */hyprdev/location || $rel == .config/hypr/wallpaper ]]; then continue; fi
+  # Personal files: user.conf, weather location, wallpaper, Settings choices, display modes.
+  if [[ -e $dest || -L $dest ]] && [[ $rel == */user.conf || $rel == */hyprdev/location || $rel == .config/hypr/wallpaper || $rel == .config/hypr/hyprdev-settings.conf || $rel == .config/hypr/monitors.conf ]]; then continue; fi
   if [[ -e $dest ]] && ! cmp -s "$f" "$dest"; then
     mkdir -p "$backup/$(dirname "$rel")"
     cp -a "$dest" "$backup/$rel"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Wallpaper picker (SUPER+W): system wallpapers + ~/Pictures/Wallpapers.
-# Re-points ~/.config/hypr/wallpaper (used by hyprpaper and hyprlock).
+# Re-points ~/.config/hypr/wallpaper (used by swaybg and hyprlock).
 set -euo pipefail
 link="$HOME/.config/hypr/wallpaper"
 dirs=(/usr/share/backgrounds/hyprdev "$HOME/Pictures/Wallpapers")
@@ -17,5 +17,4 @@ choice=$(
 [[ -f $choice ]] || exit 0
 
 ln -sfn "$choice" "$link"
-pkill -x hyprpaper || true
-hyprctl -q dispatch exec hyprpaper
+hyprctl -q dispatch exec ~/.config/hypr/scripts/wallpaper-daemon.sh

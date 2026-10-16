@@ -17,7 +17,7 @@ if [[ -n ${1:-} ]]; then
   iso_args=(-v "$iso:/boot.iso:ro")
 fi
 
-docker build -q -t hyprdev-qemu --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
+docker build -q --network host -t hyprdev-qemu --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
   -f "$root/tests/Containerfile.qemu" "$root/tests" >/dev/null
 echo "VM starting - connect a VNC viewer to localhost:5901 (Ctrl+C here to power off)"
 # Host networking: the VM's 10.0.2.2 then reaches services on this machine.

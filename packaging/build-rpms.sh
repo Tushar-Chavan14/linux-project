@@ -7,7 +7,7 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 source "$root/config.env"
 mkdir -p "$root/out/rpms" "$root/.cache/rpm-sources" "$root/.cache/go" "$root/.cache/go-build"
 "$root/packaging/make-sources.sh" >/dev/null
-docker build -q -t hyprdev-rpmbuild --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
+docker build -q --network host -t hyprdev-rpmbuild --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
   -f "$root/build/Containerfile.rpmbuild" "$root/build" >/dev/null
 docker run --rm --dns 1.1.1.1 --dns 8.8.8.8 \
   -v "$root:/src:ro" -v "$root/out/rpms:/out" -v "$root/.cache/rpm-sources:/sources" \

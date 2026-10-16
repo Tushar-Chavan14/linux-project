@@ -1,6 +1,6 @@
 Name:           hyprdev-branding
 Version:        0.1.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        hyprdev wallpapers, logos and release identity
 License:        MIT
 URL:            https://github.com/Tushar-Chavan14/linux-project
@@ -41,6 +41,9 @@ install -Dm755 branding/live/livesys-hyprland %{buildroot}%{_libexecdir}/livesys
 %{_libexecdir}/livesys/sessions.d/livesys-hyprland
 
 %changelog
+* Fri Oct 16 2026 Tushar Chavan <tusharchavan166@gmail.com> - 0.1.0-3
+- HyprDev logo; live hook no longer writes the nwg-dock pin file
+
 * Thu Oct 15 2026 Tushar Chavan <deepak@silverferndigital.com> - 0.1.0-2
 - Portfolio wallpapers; default is purpled-night
 

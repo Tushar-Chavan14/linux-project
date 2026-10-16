@@ -19,7 +19,7 @@ repositories by **hyprdev-welcome**, which opens on first login.
 | `firstboot/` | `hyprdev-welcome` (gum TUI) and its modules: gpu, repos, apps, devtools, databases |
 | `branding/` | Wallpaper (`make-wallpaper.sh`), logo, os-release template, live-session hook |
 | `sddm-theme/` | QML login theme |
-| `packaging/` | RPM specs. `extra/` packages what Fedora 44 lacks (nwg-dock-hyprland, Orbitron, Nerd symbols, cursors) |
+| `packaging/` | RPM specs. `extra/` packages what Fedora 44 lacks (Orbitron, Nerd symbols, cursors) |
 | `build/` | KIWI overlay (`HyprDev-Live` profile) and `build-iso.sh` |
 | `tests/` | Lint container and the QEMU boot test (`boot-iso.sh`) |
 
@@ -60,9 +60,9 @@ For publishing to GitHub/COPR and keeping installs updated, see [docs/RELEASING.
 | Source | Packages |
 |---|---|
 | Fedora | waybar, rofi 2.x, SwayNotificationCenter, kitty, fish, sddm, gum, fonts, Papirus… |
-| COPR `sdegler/hyprland` | hyprland, hyprlock, hypridle, hyprpaper, hyprpolkitagent, xdph, eww-git |
+| COPR `sdegler/hyprland` | hyprland, hyprlock, hypridle, hyprpolkitagent, xdph, eww-git, nwg-look |
 | COPR `atim/starship`, `atim/lazygit`, `lihaohong/yazi`, `erikreider/swayosd` | as named |
-| Our COPR (`packaging/`) | hyprdev-*, nwg-dock-hyprland, orbitron-fonts, symbols-nerd-fonts, catppuccin-cursors |
+| Our COPR (`packaging/`) | hyprdev-* (incl. hyprdev-settings), orbitron-fonts, symbols-nerd-fonts, catppuccin-cursors |
 | First boot (vendor repos) | RPM Fusion + NVIDIA akmod, Google Chrome, VSCode, Claude Code (official Anthropic RPM repo), mise, Docker CE, pgAdmin 4, MySQL 8.4 + Workbench, Flathub (Spotify, DBeaver, Bruno) |
 
 Claude Desktop has no official Fedora package (Anthropic publishes a .deb only), so the
@@ -77,6 +77,8 @@ welcome app offers an **unofficial** community RPM as an explicit opt-in.
 | `SUPER+E` / `SUPER+SHIFT+E` | Nautilus / Yazi |
 | `SUPER+N` | Control centre (Wi-Fi, Bluetooth, volume, power) |
 | `SUPER+V` | Clipboard history |
+| `SUPER+I` | HyprDev Settings (display, wallpaper, desktop, input, devices, system) |
+| Right-click desktop | Menu: terminal, files, wallpaper, display settings, settings, lock, power |
 | `SUPER+W` | Wallpaper picker (system + `~/Pictures/Wallpapers`) |
 | `SUPER+Esc` | Power menu |
 | `SUPER+/` | Every keybind |

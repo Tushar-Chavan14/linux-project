@@ -1,0 +1,106 @@
+// HyprDev dock: pinned apps (shown only when installed) | running apps | app grid
+{
+  "name": "dock",
+  "layer": "top",
+  "position": "bottom",
+  "height": 60,
+  "margin-bottom": 8,
+  "exclusive": true,
+  "spacing": 0,
+  "modules-center": [
+    "group/pinned",
+    "wlr/taskbar",
+    "custom/apps"
+  ],
+  "group/pinned": {
+    "orientation": "horizontal",
+    "modules": [
+      "image#installer",
+      "image#files",
+      "image#terminal",
+      "image#firefox",
+      "image#chrome",
+      "image#code",
+      "image#spotify",
+      "image#claude",
+      "image#settings"
+    ]
+  },
+  "wlr/taskbar": {
+    "format": "{icon}",
+    "icon-size": 36,
+    "icon-theme": "Papirus-Dark",
+    "tooltip-format": "{title}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "markup": false
+  },
+  "custom/apps": {
+    "format": "\udb80\udc3b",
+    "tooltip-format": "All apps",
+    "on-click": "pkill rofi || rofi -show drun"
+  },
+  "image#installer": {
+    "exec": "~/.config/waybar/scripts/dock-icon.sh liveinst",
+    "interval": 30,
+    "size": 36,
+    "on-click": "~/.config/waybar/scripts/dock-icon.sh --launch liveinst",
+    "tooltip": true
+  },
+  "image#files": {
+    "exec": "~/.config/waybar/scripts/dock-icon.sh org.gnome.Nautilus",
+    "interval": 30,
+    "size": 36,
+    "on-click": "~/.config/waybar/scripts/dock-icon.sh --launch org.gnome.Nautilus",
+    "tooltip": true
+  },
+  "image#terminal": {
+    "exec": "~/.config/waybar/scripts/dock-icon.sh kitty",
+    "interval": 30,
+    "size": 36,
+    "on-click": "~/.config/waybar/scripts/dock-icon.sh --launch kitty",
+    "tooltip": true
+  },
+  "image#firefox": {
+    "exec": "~/.config/waybar/scripts/dock-icon.sh org.mozilla.firefox firefox",
+    "interval": 30,
+    "size": 36,
+    "on-click": "~/.config/waybar/scripts/dock-icon.sh --launch org.mozilla.firefox firefox",
+    "tooltip": true
+  },
+  "image#chrome": {
+    "exec": "~/.config/waybar/scripts/dock-icon.sh google-chrome",
+    "interval": 30,
+    "size": 36,
+    "on-click": "~/.config/waybar/scripts/dock-icon.sh --launch google-chrome",
+    "tooltip": true
+  },
+  "image#code": {
+    "exec": "~/.config/waybar/scripts/dock-icon.sh code com.visualstudio.code",
+    "interval": 30,
+    "size": 36,
+    "on-click": "~/.config/waybar/scripts/dock-icon.sh --launch code com.visualstudio.code",
+    "tooltip": true
+  },
+  "image#spotify": {
+    "exec": "~/.config/waybar/scripts/dock-icon.sh com.spotify.Client spotify",
+    "interval": 30,
+    "size": 36,
+    "on-click": "~/.config/waybar/scripts/dock-icon.sh --launch com.spotify.Client spotify",
+    "tooltip": true
+  },
+  "image#claude": {
+    "exec": "~/.config/waybar/scripts/dock-icon.sh com.anthropic.Claude claude-desktop",
+    "interval": 30,
+    "size": 36,
+    "on-click": "~/.config/waybar/scripts/dock-icon.sh --launch com.anthropic.Claude claude-desktop",
+    "tooltip": true
+  },
+  "image#settings": {
+    "exec": "~/.config/waybar/scripts/dock-icon.sh hyprdev-settings",
+    "interval": 30,
+    "size": 36,
+    "on-click": "~/.config/waybar/scripts/dock-icon.sh --launch hyprdev-settings",
+    "tooltip": true
+  }
+}

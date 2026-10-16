@@ -1,0 +1,48 @@
+/* HyprDev dock — frosted pill centred at the bottom (Catppuccin Mocha) */
+* {
+  font-family: "Symbols Nerd Font", "Inter", sans-serif;
+  min-height: 0;
+  border: none;
+}
+
+window#waybar.dock {
+  background: transparent;
+}
+
+.modules-center {
+  background: rgba(30, 30, 46, 0.55);
+  border: 1px solid rgba(205, 214, 244, 0.08);
+  border-radius: 18px;
+  padding: 4px 8px;
+}
+
+#image, #taskbar button, #custom-apps {
+  padding: 6px;
+  margin: 0 2px;
+  border-radius: 12px;
+  background: transparent;
+}
+#image:hover, #taskbar button:hover, #custom-apps:hover {
+  background: rgba(203, 166, 247, 0.18);
+}
+#taskbar button.active {
+  background: rgba(203, 166, 247, 0.12);
+  box-shadow: inset 0 -2px 0 #cba6f7;
+}
+#taskbar:not(.empty) {
+  border-left: 1px solid rgba(205, 214, 244, 0.12);
+  margin-left: 6px;
+  padding-left: 6px;
+}
+#custom-apps {
+  color: #cba6f7;
+  font-size: 26px;
+  padding: 0 10px;
+}
+
+tooltip {
+  background: rgba(30, 30, 46, 0.92);
+  border: 1px solid rgba(203, 166, 247, 0.35);
+  border-radius: 10px;
+}
+tooltip label { color: #cdd6f4; font-family: "Inter"; }

@@ -7,8 +7,7 @@
   </defs>
   <rect x="8" y="8" width="112" height="112" rx="28" fill="#1e1e2e"/>
   <rect x="8.5" y="8.5" width="111" height="111" rx="27.5" fill="none" stroke="#cdd6f4" stroke-opacity=".12"/>
-  <!-- "t" monogram over a terminal underscore -->
-  <path d="M52 34v46c0 8 5 12 13 12h11" fill="none" stroke="url(#g)" stroke-width="11" stroke-linecap="round"/>
-  <path d="M38 50h40" stroke="url(#g)" stroke-width="11" stroke-linecap="round"/>
-  <path d="M84 92h10" stroke="#f5c2e7" stroke-width="9" stroke-linecap="round"/>
+  <!-- "H" monogram: two uprights + crossbar, with a terminal cursor underscore -->
+  <path d="M42 34v52M74 34v52M42 60h32" fill="none" stroke="url(#g)" stroke-width="11" stroke-linecap="round"/>
+  <path d="M84 92h12" stroke="#f5c2e7" stroke-width="9" stroke-linecap="round"/>
 </svg>

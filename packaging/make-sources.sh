@@ -14,4 +14,5 @@ pack hyprdev-desktop dotfiles packaging/desktop
 [[ -f $root/packaging/hyprdev-branding.spec ]] && pack hyprdev-branding branding config.env
 [[ -f $root/packaging/hyprdev-sddm-theme.spec ]] && pack hyprdev-sddm-theme sddm-theme
 [[ -f $root/packaging/hyprdev-welcome.spec ]] && pack hyprdev-welcome firstboot
+[[ -f $root/packaging/hyprdev-settings.spec ]] && pack hyprdev-settings settings
 exit 0

@@ -10,7 +10,7 @@ source "$root/config.env"
 iso=$(realpath "${1:?usage: boot-iso.sh <iso> [seconds] [interval]}")
 secs=${2:-240} every=${3:-20}
 out="$root/out/boot"; mkdir -p "$out"; rm -f "$out"/shot-*.png
-docker build -q -t hyprdev-qemu --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
+docker build -q --network host -t hyprdev-qemu --build-arg FEDORA_VERSION="$FEDORA_VERSION" \
   -f "$root/tests/Containerfile.qemu" "$root/tests" >/dev/null
 docker run --rm --device /dev/kvm -v "$iso:/boot.iso:ro" -v "$out:/out" \
   -e SECS="$secs" -e EVERY="$every" hyprdev-qemu bash -euo pipefail -c '

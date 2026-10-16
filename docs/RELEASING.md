@@ -33,7 +33,7 @@ After the first push, update the `URL:` field in `packaging/*.spec` to your real
    - Under **External repositories**, add the COPRs we depend on, so builds can resolve them:
      `copr://sdegler/hyprland`, `copr://atim/starship`, `copr://atim/lazygit`,
      `copr://lihaohong/yazi`, `copr://erikreider/swayosd`
-   - Tick **Enable internet access during builds**. nwg-dock-hyprland needs it to fetch Go modules.
+   - Tick **Enable internet access during builds**. `spectool` downloads upstream sources (fonts, cursors) during the SRPM step.
 3. Add one **package** per spec. For each, choose *SCM*:
    - Clone URL: `https://github.com/Tushar-Chavan14/linux-project.git`
    - Spec file: e.g. `packaging/hyprdev-desktop.spec` (also `packaging/extra/nwg-dock-hyprland.spec`, and so on)
@@ -45,9 +45,13 @@ After the first push, update the `URL:` field in `packaging/*.spec` to your real
 5. Set `COPR_OWNER` in `config.env` to your COPR username. Then add `"<you>/hyprdev"` to
    `COPRS=(…)` so ISOs ship with your repo enabled and installed systems pick up updates.
 
-Build order the first time: `orbitron-fonts`, `symbols-nerd-fonts`, `catppuccin-cursors` and
-`nwg-dock-hyprland` first, then `hyprdev-release` and `hyprdev-branding`, then
-`hyprdev-welcome` and `hyprdev-sddm-theme`, and `hyprdev-desktop` last.
+Build order the first time: `orbitron-fonts`, `symbols-nerd-fonts` and `catppuccin-cursors`
+first, then `hyprdev-release` and `hyprdev-branding`, then `hyprdev-welcome`,
+`hyprdev-settings` and `hyprdev-sddm-theme`, and `hyprdev-desktop` last.
+
+> `nwg-dock-hyprland` was dropped (the dock is now a Waybar instance). If it is still
+> listed as a COPR package, delete it there: **Packages → nwg-dock-hyprland → Delete**.
+> Add the new **`hyprdev-settings`** package (spec `packaging/hyprdev-settings.spec`, make_srpm).
 
 ### 1.3 GitHub Actions
 
